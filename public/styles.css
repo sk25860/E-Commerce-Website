@@ -1,0 +1,5 @@
+.navbar-nav .nav-item.active .nav-link {
+    color: #000; /* Set the color to your desired value */
+    background-color: transparent; /* Set the background color to transparent or the color you prefer */
+}
+

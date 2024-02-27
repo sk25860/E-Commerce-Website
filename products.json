@@ -1,0 +1,60 @@
+[
+  {
+    "name": "Midnight Garden",
+    "price": 125,
+    "quantity": 5,
+    "image": "https://i.pinimg.com/736x/21/4b/f4/214bf43c468b39046d6a61478e2604de.jpg"
+  },
+  {
+    "name": "Elegant French",
+    "price": 85,
+    "quantity": 10,
+    "favorite": true,
+    "image": "https://i.pinimg.com/474x/dc/a8/ea/dca8ea1d262fc8c2f600e53f581322dd.jpg"
+  },
+  {
+    "name": "Celestial Dreams",
+    "price": 115,
+    "quantity": 3,
+    "image": "https://i.pinimg.com/564x/76/3d/22/763d22a92c50213e8566f86b1cedd013.jpg"
+  },
+  {
+    "name": "Coquette Candy",
+    "price": 95,
+    "quantity": 7,
+    "favorite": true,
+    "image": "https://i.pinimg.com/736x/dd/c6/55/ddc655d9779af13d3747b7b018c32a63.jpg"
+  },
+  {
+    "name": "Bubbly Pearls",
+    "price": 105,
+    "quantity": 3,
+    "image": "https://i.pinimg.com/474x/1b/3a/59/1b3a592d6de6754c83825adcb3144c32.jpg"
+  },
+  {
+    "name": "Shining Knight",
+    "price": 110,
+    "quantity": 2,
+    "favorite": true,
+    "image": "https://i.pinimg.com/474x/34/1d/44/341d44dc35972f03e2fddb82e92185b1.jpg"
+  },
+  {
+    "name": "Lavendar Sunset",
+    "price": 85,
+    "quantity": 9,
+    "image": "https://i.pinimg.com/736x/98/1a/b0/981ab018d585f4aa4103b9f21ada0a39.jpg"
+  },
+  {
+    "name": "Ocean Breeze ",
+    "price": 120,
+    "quantity": 5,
+    "image": "https://i.pinimg.com/474x/6c/e6/d3/6ce6d31f022ac44382ecc9345aa2be3d.jpg"
+  },
+  {
+    "name": "Sunken Treasure",
+    "price": 105,
+    "quantity": 8,
+    "favorite": true,
+    "image": "https://i.pinimg.com/474x/e9/42/29/e9422993b11726a352baf6e1e5552c04.jpg"
+  }]
+  

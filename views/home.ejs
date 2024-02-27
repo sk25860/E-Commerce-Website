@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Product Page</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <%- include('partials/navbar.ejs') %>
+  
+  <div id="loginPopup">
+    <div>
+      <button id="closeButton">X</button>
+      <h2>Login</h2>
+      <form action="/login" method="POST">
+        <div>
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" required>
+        </div>
+        <div>
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit">Login</button>
+      </form>
+      <p>Don't have an account? <a href="/register">Register here</a></p>
+    </div>
+  </div>
+   
+   <div class="container-fluid">
+    <div class="row">
+      <!-- Left Vertical Section (20% width) -->
+      <div class="col-3">
+      </div>
+
+      <!-- Right Section (80% width) -->
+      <div class="col-9">
+        <div id="products-container">
+          <% products.forEach (product => { %>
+              <div class="product-container">
+                 <img src="<%= product.image %>" alt="<%= product.title %> Poster" style="max-width: 200px;">
+                 <h3 class="product-name"><%= product.name %></h3>
+                 <p>$<%= product.price %></p>
+                 <p><%= product.quantity %> left</p>
+                 <% if (product.favorite) { %>
+                    <p>Favorite Item!</p>
+                 <% } %>  
+              </div>
+           <%})%>
+        </div>
+      </div>
+    </div>
+   </div>
+  
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  
+  <script src="/script.js"></script>
+</body>
+
+
+</html>
