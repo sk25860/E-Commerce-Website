@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
+import CustomerSchema from './Customer.js';
 
-const ProductModelSchema = new mongoose.Schema({
+const ProductSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
@@ -15,12 +16,13 @@ const ProductModelSchema = new mongoose.Schema({
   }, 
   image: String,
   favorite: {
-     type: String,
+     type: Boolean,
      required: false
   }
 });
 
-// Check if the model exists before compiling it
-const ProductModel = mongoose.models.ProductModel || mongoose.model('ProductModel', ProductModelSchema);
 
-export default ProductModel;
+// Check if the model exists before compiling it
+const Product = mongoose.models.Product || mongoose.model('Product', ProductSchema);
+
+export default Product;

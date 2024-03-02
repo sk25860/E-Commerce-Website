@@ -12,7 +12,14 @@ router.post('/register', auth.verifyRegister);
 router.get('/logout', auth.logout);
 
 router.get('/', auth.isAuthenticated, ctrl.home);
-router.post('/api/products', auth.isAuthenticated, ctrl.getProducts);
+router.get('/login-page', ctrl.loginPage);
+router.get('/logout', auth.logout);
+router.get('/user-page', ctrl.userPage);
+router.get('/filter-products', auth.isAuthenticated, ctrl.filterProducts);
+router.get('/cart', auth.isAuthenticated, ctrl.cart)
+router.post('/addToCart', auth.isAuthenticated, ctrl.addToCart);
+
+
 
             
 export default router;

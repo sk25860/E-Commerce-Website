@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <title>Cart </title>
+   <link rel="stylesheet" href="/styles.css">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+   <%- include('partials/navbar.ejs') %>
+   <h1>Welcome to Your Cart, <%= req.user.name %></h1>
+   <% if (cartItems.length > 0) { %>
+     <ul>
+      <% cartItems.forEach(item => { %>
+        <li>
+          <p>Product: <%= item.name %></p>
+          <p>Quantity: <%= item.quantity %></p>
+          <p>Price: <%= item.price %></p>
+        </li>
+      <% }); %>
+     </ul>
+   <% } else { %>
+    <p>Your cart is empty.</p>
+   <% } %>
+   
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="/script.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</body>
+</html>

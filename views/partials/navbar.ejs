@@ -1,15 +1,20 @@
 <div class="navbar">
-   <i class="fas fa-home"></i>
+   <a href="/">
+      <i class="fas fa-home"></i>
+   </a>
+   
    
    <div class="dropdown">
       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        //name
+        <%= req.user.name %>
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="#">Account</a>
-        <a class="dropdown-item" href="#">Logout</a>
+        <a class="dropdown-item" href="/user-page">Account</a>
+        <a class="dropdown-item" href="/logout">Logout</a>
       </div>
     </div>
+   <a href="/cart">
+      <i class="fas fa-shopping-cart"></i>
+   </a>
    
-   <i class="fas fa-shopping-cart"></i>
 </div>

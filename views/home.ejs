@@ -10,46 +10,50 @@
 <body>
   <%- include('partials/navbar.ejs') %>
   
+  <% if (!isAuthenticated) { %>
   <div id="loginPopup">
-    <div>
-      <button id="closeButton">X</button>
-      <h2>Login</h2>
-      <form action="/login" method="POST">
-        <div>
-          <label for="username">Username:</label>
-          <input type="text" id="username" name="username" required>
-        </div>
-        <div>
-          <label for="password">Password:</label>
-          <input type="password" id="password" name="password" required>
-        </div>
-        <button type="submit">Login</button>
-      </form>
-      <p>Don't have an account? <a href="/register">Register here</a></p>
-    </div>
+      <button id="loginButton">Login</button>
   </div>
+  <% } %>
    
    <div class="container-fluid">
     <div class="row">
       <!-- Left Vertical Section (20% width) -->
       <div class="col-3">
+         <form id="searchForm">
+            <h3>Filter Products</h3>
+            <label for="name">Product Name:</label>
+            <input type="text" id="name" placeholder="Type to filter" oninput="filterProducts()">
+
+            <label for="priceRange">Price Range:</label>
+            <input type="range" id="priceRange" name="priceRange" min="80" max="150" step="10" value="150" oninput="filterProducts()">
+            <span id="priceValue">$150</span>
+            
+            <label for="favorite"></label>
+            <input type="checkbox" id="favorite" onchange="filterProducts()"> Favorite
+         </form>
+        
       </div>
 
       <!-- Right Section (80% width) -->
       <div class="col-9">
         <div id="products-container">
-          <% products.forEach (product => { %>
-              <div class="product-container">
-                 <img src="<%= product.image %>" alt="<%= product.title %> Poster" style="max-width: 200px;">
-                 <h3 class="product-name"><%= product.name %></h3>
-                 <p>$<%= product.price %></p>
-                 <p><%= product.quantity %> left</p>
-                 <% if (product.favorite) { %>
-                    <p>Favorite Item!</p>
-                 <% } %>  
-              </div>
-           <%})%>
-        </div>
+        <% filteredProducts.forEach(product => { %>
+          <div class="product-container">
+            <img src="<%= product.image %>" alt="<%= product.name %>" style="max-width: 200px;">
+            <h3 class="product-name"><%= product.name %></h3>
+            <p>$<%= product.price %></p>
+            <p><%= product.quantity %> left</p>
+            <% if (product.favorite) { %>
+              <p>Favorite Item!</p>
+            <% } %>
+            <form method="POST" action="/addToCart">
+              <input type="hidden" name="productId" value="<%= product._id %>">
+              <button type="submit">Add to Cart</button>
+            </form>
+          </div>
+        <% }) %>
+      </div>
       </div>
     </div>
    </div>
@@ -59,6 +63,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   
   <script src="/script.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </body>
 
 

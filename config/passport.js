@@ -2,11 +2,11 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import Customer from '../models/Customer.js';
 
 export default function(passport) {
-  passport.use(new LocalStrategy(async (username, password, done) => {
+  passport.use(new LocalStrategy(async (email, password, done) => {
     try {
-      const user = await Customer.findOne({ username });
+      const user = await Customer.findOne({ email });
       if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
+        return done(null, false, { message: 'Incorrect email.' });
       }
 
       user.comparePassword(password, (err, isMatch) => {
