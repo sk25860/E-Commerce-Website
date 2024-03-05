@@ -34,7 +34,7 @@
                <span id="priceValue">$130</span>
             </div>
             <br>
-            <div>
+            <div class="favorite-filter">
                <label for="favorite"></label>
                <input type="checkbox" id="favorite" onchange="filterProducts()"> Favorite
             </div>
@@ -49,20 +49,9 @@
         <% filteredProducts.forEach(product => { %>
           <% if (product.favorite) { %>
              <div class="col-4 product-container-favorite">
-               <img src="<%= product.image %>" alt="<%= product.name %>" style="max-width: 200px;">
-               <h3 class="product-name"><%= product.name %></h3>
-               <p>$<%= product.price %></p>
-               <p><%= product.quantity %> left</p>
-               <% if (product.favorite) { %>
-                 <p>Favorite Item!</p>
-               <% } %>
-               <form method="POST" action="/addToCart">
-                 <input type="hidden" name="productId" value="<%= product._id %>">
-                 <button type="submit">Add to Cart</button>
-               </form>
-             </div>
-           <% } else { %>
+          <% } else { %>
               <div class="col-4 product-container">
+          <% } %> 
                <img src="<%= product.image %>" alt="<%= product.name %>" style="max-width: 200px;">
                <h3 class="product-name"><%= product.name %></h3>
                <p>$<%= product.price %></p>
@@ -72,10 +61,10 @@
                <% } %>
                <form method="POST" action="/addToCart">
                  <input type="hidden" name="productId" value="<%= product._id %>">
-                 <button type="submit">Add to Cart</button>
+                 <button class="cart-submit" type="submit">Add to Cart</button>
                </form>
              </div>
-        <% } }) %>
+        <% }) %>
       </div>
       </div>
     </div>

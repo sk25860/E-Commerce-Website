@@ -8,25 +8,28 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap">
 </head>
-<body>
+<body class="user-body">
   <%- include('partials/navbar.ejs') %>
+  <div class="user-container-title">
+     <h1>Welcome, <%= req.user.name %>!</h1>
+  </div>
+  <div class="user-container">
 
-  <div class="container">
-    <h1>Welcome, <%= req.user.name %>!</h1>
-
-    <h2>Purchase History</h2>
+    <h2 class="purchase-history">Purchase History</h2>
     <ul>
       <% purchaseHistory.forEach(item => { %>
-        <li>
-          <%= item.quantity %> x <%= item.name %>
+          <p><%= item.quantity %> x <%= item.name %></p>
           <!--<p>Purchased on: <%= //purchaseHistory.purchaseDate.toLocaleDateString('en-US') %></p> -->
-        </li>
-      <% }) %>
+      <% }) %> 
     </ul>
-    <h2>Total Spent: $<%= totalSpent %></h2>
-    <h2>Total Credit Left: $<%= totalCreditLeft %></h2>
+    <h4>Total Spent: $<%= totalSpent %></h4>
+    <h4>Total Credit Left: $<%= totalCreditLeft %></h4>
   </div>
-
+  
+  <div class="user-image-container"> 
+   <img class="user-page-image" src="https://i.pinimg.com/736x/f7/df/94/f7df94e634e9e0ac683315c94f906cd1.jpg">
+  </div>
+  
  
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>

@@ -86,7 +86,6 @@ export const userPage = async (req, res) => {
 
 
 export const filterProducts = async (req, res) => {
-   console.log(req.query);
   try {
       const { name, priceRange, favorite } = req.query;
       const query = {};
@@ -210,15 +209,15 @@ export const updateCartItem = async (req, res) => {
     if (!product) {
       return res.status(404).send('Product not found.');
     }
+     
+    product.quantity -= (quantity - cartItem.quantity); 
+    cartItem.quantity = quantity;
 
-    const newQuantity = Math.min(product.quantity, Math.max(1, parseInt(quantity)));
 
-    cartItem.quantity = newQuantity;
-
-    customer.cart.totalQuantity = customer.cart.products.reduce((total, item) => total + item.quantity, 0);
+     customer.cart.totalQuantity = customer.cart.products.reduce((total, item) => total + item.quantity, 0);
     customer.cart.totalPrice = customer.cart.products.reduce((total, item) => total + item.price * item.quantity, 0);
 
-    await customer.save();
+    await Promise.all([customer.save(), product.save()]);
 
     res.redirect('/cart');
   } catch (error) {
@@ -232,9 +231,18 @@ export const removeFromCart = async (req, res) => {
   try {
     const { productId } = req.body;
     const customer = await Customer.findById(req.user._id);
+     
+    const product = await Product.findById(productId);
+    const cartItemIndex = customer.cart.products.findIndex(item => item.productId.equals(productId));
+    const cartItem = customer.cart.products[cartItemIndex];
+     
+    product.quantity += cartItem.quantity;
+    customer.cart.products.splice(cartItemIndex, 1);
 
-    customer.cart.products = customer.cart.products.filter(item => !item.productId.equals(productId));
-    await customer.save();
+    customer.cart.totalQuantity -= cartItem.quantity;
+    customer.cart.totalPrice -= cartItem.price * cartItem.quantity;
+          
+    await Promise.all([customer.save(), product.save()]);
 
     res.redirect('/cart');
   } catch (error) {
@@ -248,8 +256,17 @@ export const clearCart = async (req, res) => {
   try {
     const customer = await Customer.findById(req.user._id);
 
-    customer.cart.products = [];
+    for (const cartItem of customer.cart.products) {
+      const product = await Product.findById(cartItem.productId);
 
+      if (product) {
+        product.quantity += cartItem.quantity;
+
+        await product.save();
+      }
+    }
+
+    customer.cart.products = [];
     customer.cart.totalQuantity = 0;
     customer.cart.totalPrice = 0;
 
@@ -261,6 +278,5 @@ export const clearCart = async (req, res) => {
     res.status(500).send('Error clearing cart.');
   }
 };
-
 
 

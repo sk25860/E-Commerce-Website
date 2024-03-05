@@ -8,7 +8,8 @@
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap">
 </head>
-<body>
+<body class="login-body">
+  <h1 class="login-title">Login</h1>
    <form action="/login" method="POST">
         <div>
           <label for="username">Username:</label>
@@ -18,9 +19,9 @@
           <label for="password">Password:</label>
           <input type="password" id="password" name="password" required>
         </div>
-        <button type="submit">Login</button>
+        <button class="login-button" type="submit">Login</button>
       </form>
-      <p>Don't have an account? <a href="/register">Register here</a></p>
+      <p>Don't have an account? <a class="register-link" href="/register">Register here</a></p>
 </body>
 </html>
        
