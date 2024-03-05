@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="/styles.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap">
 </head>
 <body>
   <%- include('partials/navbar.ejs') %>
@@ -21,16 +22,23 @@
       <!-- Left Vertical Section (20% width) -->
       <div class="col-3">
          <form id="searchForm">
-            <h3>Filter Products</h3>
-            <label for="name">Product Name:</label>
-            <input type="text" id="name" placeholder="Type to filter" oninput="filterProducts()">
-
-            <label for="priceRange">Price Range:</label>
-            <input type="range" id="priceRange" name="priceRange" min="80" max="150" step="10" value="150" oninput="filterProducts()">
-            <span id="priceValue">$150</span>
+            <h3 class="filter-prods-title">Filter Products</h3>
+            <div>
+              <label for="name">Product Name:</label>
+              <input type="text" id="name" placeholder="Type to filter" oninput="filterProducts()"> 
+            </div>
+            <br>
+            <div>
+               <label for="priceRange">Price Range:</label>
+               <input type="range" id="priceRange" name="priceRange" min="80" max="130" step="10" value="130" oninput="filterProducts()">
+               <span id="priceValue">$130</span>
+            </div>
+            <br>
+            <div>
+               <label for="favorite"></label>
+               <input type="checkbox" id="favorite" onchange="filterProducts()"> Favorite
+            </div>
             
-            <label for="favorite"></label>
-            <input type="checkbox" id="favorite" onchange="filterProducts()"> Favorite
          </form>
         
       </div>
@@ -39,20 +47,35 @@
       <div class="col-9">
         <div id="products-container">
         <% filteredProducts.forEach(product => { %>
-          <div class="product-container">
-            <img src="<%= product.image %>" alt="<%= product.name %>" style="max-width: 200px;">
-            <h3 class="product-name"><%= product.name %></h3>
-            <p>$<%= product.price %></p>
-            <p><%= product.quantity %> left</p>
-            <% if (product.favorite) { %>
-              <p>Favorite Item!</p>
-            <% } %>
-            <form method="POST" action="/addToCart">
-              <input type="hidden" name="productId" value="<%= product._id %>">
-              <button type="submit">Add to Cart</button>
-            </form>
-          </div>
-        <% }) %>
+          <% if (product.favorite) { %>
+             <div class="col-4 product-container-favorite">
+               <img src="<%= product.image %>" alt="<%= product.name %>" style="max-width: 200px;">
+               <h3 class="product-name"><%= product.name %></h3>
+               <p>$<%= product.price %></p>
+               <p><%= product.quantity %> left</p>
+               <% if (product.favorite) { %>
+                 <p>Favorite Item!</p>
+               <% } %>
+               <form method="POST" action="/addToCart">
+                 <input type="hidden" name="productId" value="<%= product._id %>">
+                 <button type="submit">Add to Cart</button>
+               </form>
+             </div>
+           <% } else { %>
+              <div class="col-4 product-container">
+               <img src="<%= product.image %>" alt="<%= product.name %>" style="max-width: 200px;">
+               <h3 class="product-name"><%= product.name %></h3>
+               <p>$<%= product.price %></p>
+               <p><%= product.quantity %> left</p>
+               <% if (product.favorite) { %>
+                 <p>Favorite Item!</p>
+               <% } %>
+               <form method="POST" action="/addToCart">
+                 <input type="hidden" name="productId" value="<%= product._id %>">
+                 <button type="submit">Add to Cart</button>
+               </form>
+             </div>
+        <% } }) %>
       </div>
       </div>
     </div>

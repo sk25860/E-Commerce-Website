@@ -1,5 +1,121 @@
-.navbar-nav .nav-item.active .nav-link {
-    color: #000; /* Set the color to your desired value */
-    background-color: transparent; /* Set the background color to transparent or the color you prefer */
+*{
+   color: white;
+   font-family: 'Madimi One', cursive;
 }
+
+/* NAVBAR */
+
+.navbar {
+   background-color: #663a82;
+}
+
+.navbar-nav .nav-item.active .nav-link {
+    color: #000; 
+    background-color: transparent; 
+}
+
+.dropdown-menu a.dropdown-item {
+  background-color: white;
+  color: #663a82;
+}
+
+.dropdown-menu a.dropdown-item:hover {
+  background-color: #663a82;
+  color: white;
+}
+
+#dropdownMenuButton {
+   background-color: #b491c8;
+   border: none;
+}
+
+.dropdown {
+   margin-left: 83%;
+}
+
+.cart, .home{
+   font-size: 22px;
+}
+
+.cart {
+   margin-left: -10%;
+}
+
+
+/* HOME PAGE */
+
+
+button{
+   background-color: #663a82;
+   border: none;
+   border-radius: 20px;
+}
+
+/* LEFT SECTION */
+.col-3 {
+   background-color: #7c5295;
+   height: 1300px;
+}
+
+.filter-prods-title{
+   margin-top: 3%;
+   margin-left: 2%;
+}
+
+/* RIGHT SECTION */ 
+
+.col-9 {
+   background-color: #b491c8;
+   padding-top: 2%;
+   height: 1300px;
+}
+
+#products-container, .product-container-favorite {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around; 
+}
+
+.product-container, .product-container-favorite {
+  padding: 15px;
+  width: calc(33.33% - 20px); 
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+.product-container img, .product-container-favorite img {
+  width: 200px;
+  height: 200px; 
+  object-fit: cover;
+}
+
+.product-container h3, .product-container-favorite h3 {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.product-container p, .product-container-favorite p {
+  margin: 5px 0;
+}
+
+.product-container-favorite {
+  box-shadow: 0 0 10px #663a82;
+}
+
+
+
+
+/* CART */
+
+.cart-body{
+   background-color: #b491c8;
+}
+
+/* cart products */ 
+
+.quantity-input {
+  max-width: 50px; 
+  color: black;
+}
+
 

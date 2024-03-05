@@ -6,8 +6,9 @@
    <link rel="stylesheet" href="/styles.css">
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap">
 </head>
-<body>
+<body class="cart-body">
    <%- include('partials/navbar.ejs') %>
    <h1>Welcome to Your Cart, <%= req.user.name %></h1>
    <% if (cartItems.length > 0) { %>
@@ -16,10 +17,30 @@
         <li>
           <p>Product: <%= item.name %></p>
           <p>Quantity: <%= item.quantity %></p>
-          <p>Price: <%= item.price %></p>
+          <p>Price: $<%= item.price %></p>
         </li>
+         <form method="POST" action="/updateCartItem">
+           <input type="hidden" name="productId" value="<%= item.productId._id %>">
+           <input class="quantity-input" type="number" name="quantity" value="<%= item.quantity %>" min="1" max="<%= item.productId.quantity %>">
+           <button type="submit">Update</button>
+         </form>
+
+         <form method="POST" action="/removeFromCart">
+           <input type="hidden" name="productId" value="<%= item.productId._id %>">
+           <button type="submit">Remove from Cart</button>
+         </form>
       <% }); %>
      </ul>
+   
+     <p>Total Quantity: <%= customer.cart.totalQuantity %></p>
+     <p>Total Price: $<%= customer.cart.totalPrice %>
+     <form method="POST" action="/clearCart">
+       <button type="submit">Clear Cart</button>
+     </form>
+     <form method="POST" action="/purchase">
+        <button type="submit">Purchase</button>
+     </form>
+   
    <% } else { %>
     <p>Your cart is empty.</p>
    <% } %>

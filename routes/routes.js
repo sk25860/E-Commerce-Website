@@ -18,6 +18,11 @@ router.get('/user-page', ctrl.userPage);
 router.get('/filter-products', auth.isAuthenticated, ctrl.filterProducts);
 router.get('/cart', auth.isAuthenticated, ctrl.cart)
 router.post('/addToCart', auth.isAuthenticated, ctrl.addToCart);
+router.post('/purchase', ctrl.purchase);
+router.post('/updateCartItem', ctrl.updateCartItem);
+router.post('/removeFromCart', ctrl.removeFromCart);
+router.post('/clearCart', ctrl.clearCart);
+
 
 
 

@@ -10,18 +10,23 @@ async function filterProducts() {
       productsContainer.innerHTML = '';
       filteredProducts.forEach(product => {
          const productContainer = document.createElement('div');
-         productContainer.className = 'product-container';
+         if (product.favorite) {
+            productContainer.className = 'product-container-favorite';
+         } else {
+            productContainer.className = 'product-container';
+         }
          productContainer.innerHTML = `
-            <img src="${product.image}" alt="${product.name}" style="max-width: 200px;">
-            <h3 class="product-name">${product.name}</h3>
-            <p>$${product.price}</p>
-            <p>${product.quantity} left</p>
-            ${product.favorite ? '<p>Favorite Item!</p>' : ''}
-            <form method="POST" action="/addToCart">
-              <input type="hidden" name="productId" value="${product._id}">
-              <button type="submit">Add to Cart</button>
-            </form>
-         `;
+               <img src="${product.image}" alt="${product.name}" style="max-width: 200px;">
+               <h3 class="product-name">${product.name}</h3>
+               <p>$${product.price}</p>
+               <p>${product.quantity} left</p>
+               ${product.favorite ? '<p>Favorite Item!</p>' : ''}
+               <form method="POST" action="/addToCart">
+                 <input type="hidden" name="productId" value="${product._id}">
+                 <button type="submit">Add to Cart</button>
+               </form>
+            `;
+         
          productsContainer.appendChild(productContainer);
       });
    document.getElementById('priceValue').innerHTML = "$" + document.getElementById('priceRange').value;
@@ -35,4 +40,4 @@ document.getElementById('name').addEventListener('input', filterProducts);
 document.getElementById('priceRange').addEventListener('change', filterProducts);
 
 
-
+console.log(customer);
