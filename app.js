@@ -1,4 +1,5 @@
 import express from 'express';
+import flash from 'express-flash';
 import mongoose from 'mongoose';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
@@ -44,6 +45,14 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+//flash
+app.use(session({
+  secret: 'your-secret-key',
+  resave: false,
+  saveUninitialized: true,
+}));
+
+app.use(flash());
 
 
 // Define routes
