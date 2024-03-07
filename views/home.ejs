@@ -9,65 +9,90 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap">
 </head>
 <body>
-  <%- include('partials/navbar.ejs') %>
+   <!-- navigation bar -->
+   <%- include('partials/navbar.ejs') %>
+   
+   <% if (messages.cartAdd) { %>
+     <div class="flash-message cartAdd">
+       <%= messages.cartAdd %>
+     </div>
+   <% } %>
+   <% if (messages.purchase) { %>
+     <div class="flash-message purchase">
+       <%= messages.purchase %>
+     </div>
+   <% } %>
+   <% if (messages.noProduct) { %>
+     <div class="flash-message noProduct">
+       <%= messages.noProduct %>
+     </div>
+   <% } %>
   
-  <% if (!isAuthenticated) { %>
-  <div id="loginPopup">
+   <% if (!isAuthenticated) { %>
+   <div id="loginPopup">
       <button id="loginButton">Login</button>
-  </div>
-  <% } %>
+   </div>
+   <% } %>
    
    <div class="container-fluid">
-    <div class="row">
-      <!-- Left Vertical Section (20% width) -->
-      <div class="col-3">
-         <form id="searchForm">
-            <h3 class="filter-prods-title">Filter Products</h3>
-            <div>
-              <label for="name">Product Name:</label>
-              <input type="text" id="name" placeholder="Type to filter" oninput="filterProducts()"> 
-            </div>
-            <br>
-            <div>
-               <label for="priceRange">Price Range:</label>
-               <input type="range" id="priceRange" name="priceRange" min="80" max="130" step="10" value="130" oninput="filterProducts()">
-               <span id="priceValue">$130</span>
-            </div>
-            <br>
-            <div class="favorite-filter">
-               <label for="favorite"></label>
-               <input type="checkbox" id="favorite" onchange="filterProducts()"> Favorite
-            </div>
+      <div class="row">
+         <!-- left vertical section -->
+         <div class="col-3">
+           
+            <!-- filtering -->
+            <form id="searchForm">
+              
+               <h3 class="filter-prods-title">Filter Products</h3>
+               <div>
+                 <label for="name">Product Name:</label>
+                 <input type="text" id="name" placeholder="Type to filter" oninput="filterProducts()"> 
+               </div>
+               <br>
+               <div>
+                  <label for="priceRange">Price Range:</label>
+                  <input type="range" id="priceRange" name="priceRange" min="80" max="130" step="10" value="130" oninput="filterProducts()">
+                  <span id="priceValue">$130</span>
+               </div>
+               <br>
+               <div class="favorite-filter">
+                  <label for="favorite"></label>
+                  <input type="checkbox" id="favorite" onchange="filterProducts()"> Favorite
+               </div>
+               
             
-         </form>
+            </form>
         
-      </div>
+         </div>
 
-      <!-- Right Section (80% width) -->
-      <div class="col-9">
-        <div id="products-container">
-        <% filteredProducts.forEach(product => { %>
-          <% if (product.favorite) { %>
-             <div class="col-4 product-container-favorite">
-          <% } else { %>
-              <div class="col-4 product-container">
-          <% } %> 
-               <img src="<%= product.image %>" alt="<%= product.name %>" style="max-width: 200px;">
-               <h3 class="product-name"><%= product.name %></h3>
-               <p>$<%= product.price %></p>
-               <p><%= product.quantity %> left</p>
+         <!-- right vertical section -->
+         <div class="col-9">
+            <div id="products-container">
+            <% filteredProducts.forEach(product => { %>
                <% if (product.favorite) { %>
-                 <p>Favorite Item!</p>
-               <% } %>
-               <form method="POST" action="/addToCart">
-                 <input type="hidden" name="productId" value="<%= product._id %>">
-                 <button class="cart-submit" type="submit">Add to Cart</button>
-               </form>
-             </div>
-        <% }) %>
+                  <div class="col-4 product-container-favorite">
+               <% } else { %>
+                  <div class="col-4 product-container">
+               <% } %> 
+
+                     <img src="<%= product.image %>" alt="<%= product.name %>" style="max-width: 200px;">
+                     <h3 class="product-name"><%= product.name %></h3>
+                     <p class="product.price">$<%= product.price %></p>
+                     <p class="product-quantity"><%= product.quantity %> left</p>
+
+                     <% if (product.favorite) { %>
+                        <p class="favorite-item">Favorite Item!</p>
+                     <% } %>
+
+                     <form method="POST" action="/addToCart">
+                        <input type="hidden" name="productId" value="<%= product._id %>">
+                        <button class="cart-submit" type="submit">Add to Cart</button>
+                     </form>
+                </div>
+           <% }) %>
+               </div>
+         </div>
+       </div>
       </div>
-      </div>
-    </div>
    </div>
   
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

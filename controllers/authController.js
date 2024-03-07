@@ -1,4 +1,4 @@
-import Customer from '../Models/Customer.js';
+import Customer from '../models/Customer.js';
 import passport from 'passport';
 
 export const login = (req, res) => {
@@ -28,12 +28,12 @@ export const verifyRegister = async (req, res) => {
 export const logout = (req, res) => {
   req.logout(function(err) {
     if (err) { return next(err); }
-    // Redirect or respond after successful logout
+    //redirect after logging out
     res.redirect('/');
   });
 }                        
 
-// Middleware to check if the user is authenticated
+//checking user authentication
 export const isAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();

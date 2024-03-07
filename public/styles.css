@@ -13,15 +13,35 @@ input{
    color: black;
 }
 
+.flash-message {
+   text-align: center;
+   color: #663a82;
+   background-color: white;
+   border: solid 2px #663a82;
+   font-size: 130%;
+}
+
 /* NAVBAR */
+
+.shop-title{
+   position: absolute;
+   top: 13%;
+   left: 5%;
+   font-size: 200%;
+}
+
 
 .navbar {
    background-color: #663a82;
 }
 
+.cart-quant {
+   margin-left: -2%;
+}
+
 .navbar-nav .nav-item.active .nav-link {
-    color: #000; 
-    background-color: transparent; 
+  color: #000; 
+  background-color: transparent; 
 }
 
 .dropdown-menu a.dropdown-item {
@@ -39,6 +59,7 @@ input{
    border: none;
 }
 
+
 .dropdown {
    margin-left: 83%;
 }
@@ -50,6 +71,11 @@ input{
 .cart {
    margin-left: -10%;
 }
+
+.cart-submit {
+   border-radius: 10px;
+}
+
 
 
 /* HOME PAGE */
@@ -72,6 +98,10 @@ input{
    margin-top: -5%;
 }
 
+#product-name {
+   border-radius: 5px;
+   border: none;
+}
 
 /* RIGHT SECTION */ 
 
@@ -93,12 +123,52 @@ input{
   box-sizing: border-box;
   margin-bottom: 20px;
   transition: transform 0.3s ease;
-   border-radius: 10px;
+  border-radius: 10px;
 }
 
 .product-container:hover, .product-container-favorite:hover {
   transform: scale(1.1); 
 }
+
+.product-container:hover .product-name {
+   background-image: linear-gradient(-100deg, white 0%, #b491c8 15%, #7c5295 30%,  #7c5295 65%, #b491c8 80%, white 100%
+  );
+   background-size: 170% auto;
+  background-clip: border-box;
+  color: #fff;
+  background-clip: text;
+  text-fill-color: transparent;
+   -webkit-background-clip: text;
+   -webkit-text-fill-color: transparent;
+   animation: textclip .5s linear 1;
+}
+
+.product-container-favorite:hover .product-name {
+   background-image: linear-gradient(-100deg, white 0%, #b491c8 15%, #7c5295 30%,  #7c5295 65%, #b491c8 80%, white 100%
+  );
+   background-size: 170% auto;
+  background-clip: border-box;
+  color: #fff;
+  background-clip: text;
+  text-fill-color: transparent;
+   -webkit-background-clip: text;
+   -webkit-text-fill-color: transparent;
+   animation: textclip .5s linear 1;
+}
+
+
+
+
+
+@keyframes textclip {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
 
 .product-container img, .product-container-favorite img {
   width: 200px;
@@ -110,7 +180,7 @@ input{
 .product-container h3 {
   font-size: 18px;
   margin-bottom: 1%;
-   margin-top: 1%;
+  margin-top: 1%;
 }
 
 .product-container p {
@@ -140,6 +210,7 @@ input{
 
 .cart-title{
    margin-bottom: 1%;
+   margin-top: 3%;
 }
 
 .cartItem-container {
@@ -155,19 +226,40 @@ input{
    margin-left: 3%;
 }
 
-.clear-cart-button{
+.clear-cart {
    margin-bottom: 1%;
+}
+
+.clear-cart-button{
+   border-radius: 10px;
+   transform: scale(1.1);
+   margin-bottom: .5%;
+}
+
+.purchase-button {
+   border-radius: 10px;
+   transform: scale(1.5);
 }
 
 /* cart products */ 
 
 .quantity-input {
-  max-width: 50px; 
+  max-width: 35px; 
   color: black;
+  border-radius: 10px;
+  border: none;
 }
 
 .cart-update-button {
    margin-bottom: 2%;
+}
+
+.update-button{
+   border-radius: 10px;
+}
+
+.remove-button{
+   border-radius: 10px;
 }
 
 /* USER */
@@ -217,6 +309,15 @@ input{
    box-shadow: 0 0 10px #663a82;
 }
 
+.purchased-item {
+   font-size: 120%;
+}
+
+.purchased-item-date {
+   font-size: 90%;
+   margin-top: -2.5%;
+   margin-bottom: 3.5%;
+}
 
 /* REGISTER & LOGIN */ 
 
@@ -232,6 +333,7 @@ input{
 
 .login-button{
    margin-bottom: 1.5%;
+   border-radius: 10px;
 }
 
 .register-link {

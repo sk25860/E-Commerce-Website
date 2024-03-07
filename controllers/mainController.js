@@ -25,14 +25,12 @@ export const home = async (req, res) => {
     if (req.query && req.query.name && req.query.priceRange) {
       filteredProducts = await filterProducts(req.query);
     }
-    
     res.render('home', { filteredProducts, isAuthenticated: req.isAuthenticated(), req});
   } catch (error) {
     console.error(`Error loading page: ${error.message}`);
     res.status(500).send('Error loading page');
   }
 };
-
 
 export const cart = async (req, res) => {
   try {
@@ -58,7 +56,6 @@ export const cart = async (req, res) => {
   }
 };
 
-
 export const userPage = async (req, res) => {
    try {
     const customer = await Customer.findById(req.user._id);
@@ -70,6 +67,7 @@ export const userPage = async (req, res) => {
           productId: product._id,
           name: product.name,
           quantity: item.quantity,
+          purchaseDate: item.purchaseDate, 
         });
       }
     }
@@ -83,7 +81,6 @@ export const userPage = async (req, res) => {
     res.status(500).send('Error loading cart.');
   }
 };
-
 
 export const filterProducts = async (req, res) => {
   try {
@@ -107,7 +104,6 @@ export const filterProducts = async (req, res) => {
    }
 };
 
-
 export const addToCart = async (req, res) => {
   try {
     const { productId } = req.body;
@@ -118,48 +114,55 @@ export const addToCart = async (req, res) => {
     }
 
     if (product.quantity < 1) {
-      return res.status(400).send('Not enough quantity available.');
+      req.flash('noProduct', 'Not enough quantity');
+      res.redirect('/');
+    }
+    else {
+       const customer = await Customer.findById(req.user._id);
+       const existingCartItem = customer.cart.products.find(item => item.productId.equals(product._id));
+
+       if (existingCartItem) {
+         existingCartItem.quantity += 1;
+       } else {
+         customer.cart.products.push({
+           productId: product._id,
+           quantity: 1,
+           price: product.price
+         });
+       }
+
+       customer.cart.totalQuantity = customer.cart.products.reduce((total, item) => total + item.quantity, 0);
+       customer.cart.totalPrice = customer.cart.products.reduce((total, item) => total + item.price * item.quantity, 0);
+
+       product.quantity -= 1;
+       await Promise.all([customer.save(), product.save()]);
+
+       req.flash('cartAdd', 'Product added to cart!');
+
+       res.redirect('/');
     }
 
-    const customer = await Customer.findById(req.user._id);
-    const existingCartItem = customer.cart.products.find(item => item.productId.equals(product._id));
-
-    if (existingCartItem) {
-      existingCartItem.quantity += 1;
-    } else {
-      customer.cart.products.push({
-        productId: product._id,
-        quantity: 1,
-        price: product.price
-      });
-    }
-
-    customer.cart.totalQuantity = customer.cart.products.reduce((total, item) => total + item.quantity, 0);
-    customer.cart.totalPrice = customer.cart.products.reduce((total, item) => total + item.price * item.quantity, 0);
-
-    product.quantity -= 1;
-    await Promise.all([customer.save(), product.save()]);
-
-    res.redirect('/');
+    
   } catch (error) {
     console.error(`Error adding to cart: ${error.message}`);
     res.status(500).send('Error adding to cart.');
   }
 };
 
-
 export const purchase = async (req, res) => {
   try {
     const customer = await Customer.findById(req.user._id).populate('cart.products.productId');
 
     if (customer.cart.products.length === 0) {
-      return res.status(400).send('Your cart is empty. Add items before making a purchase.');
+      req.flash('notEnoughCart', 'Add items to cart before purchasing.');
+      res.redirect('/cart');
     }
 
     const cartTotalPrice = customer.cart.totalPrice;
 
     if (customer.credit < cartTotalPrice) {
-      return res.status(400).send('Not enough credits to make the purchase.');
+      req.flash('notEnoughCredit', 'Not enough credits to make purchase.');
+      res.redirect('/cart');
     }
    
     const purchaseDate = new Date();
@@ -186,6 +189,8 @@ export const purchase = async (req, res) => {
     customer.cart.totalPrice = 0;
 
     await customer.save();
+     
+    req.flash('purchase', 'Purchase successful!');
 
     res.redirect('/'); 
   } catch (error) {
@@ -193,7 +198,6 @@ export const purchase = async (req, res) => {
     res.status(500).send('Error making purchase.');
   }
 };
-
 
 export const updateCartItem = async (req, res) => {
   try {
@@ -210,22 +214,31 @@ export const updateCartItem = async (req, res) => {
       return res.status(404).send('Product not found.');
     }
      
-    product.quantity -= (quantity - cartItem.quantity); 
-    cartItem.quantity = quantity;
+    if (quantity > product.quantity) {
+      req.flash('noProduct', 'Not enough quantity');
+      res.redirect('/cart');
+    }
+    else {
+       product.quantity -= (quantity - cartItem.quantity); 
+       cartItem.quantity = quantity;
 
 
-     customer.cart.totalQuantity = customer.cart.products.reduce((total, item) => total + item.quantity, 0);
-    customer.cart.totalPrice = customer.cart.products.reduce((total, item) => total + item.price * item.quantity, 0);
+       customer.cart.totalQuantity = customer.cart.products.reduce((total, item) => total + item.quantity, 0);
+       customer.cart.totalPrice = customer.cart.products.reduce((total, item) => total + item.price * item.quantity, 0);
 
-    await Promise.all([customer.save(), product.save()]);
+       await Promise.all([customer.save(), product.save()]);
 
-    res.redirect('/cart');
+       req.flash('cartUpate', 'Product quantity has been updated!');
+
+       res.redirect('/cart');
+    }
+     
+    
   } catch (error) {
     console.error(`Error updating cart item: ${error.message}`);
     res.status(500).send('Error updating cart item.');
   }
 };
-
 
 export const removeFromCart = async (req, res) => {
   try {
@@ -243,6 +256,8 @@ export const removeFromCart = async (req, res) => {
     customer.cart.totalPrice -= cartItem.price * cartItem.quantity;
           
     await Promise.all([customer.save(), product.save()]);
+     
+    req.flash('cartRemove', 'Product has been removed from cart!');
 
     res.redirect('/cart');
   } catch (error) {
@@ -250,7 +265,6 @@ export const removeFromCart = async (req, res) => {
     res.status(500).send('Error removing item from cart.');
   }
 };
-
 
 export const clearCart = async (req, res) => {
   try {
@@ -271,6 +285,8 @@ export const clearCart = async (req, res) => {
     customer.cart.totalPrice = 0;
 
     await customer.save();
+     
+    req.flash('cartClear', 'Cart has been cleared!');  
 
     res.redirect('/cart');
   } catch (error) {

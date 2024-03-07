@@ -18,8 +18,9 @@
     <h2 class="purchase-history">Purchase History</h2>
     <ul>
       <% purchaseHistory.forEach(item => { %>
-          <p><%= item.quantity %> x <%= item.name %></p>
-          <!--<p>Purchased on: <%= //purchaseHistory.purchaseDate.toLocaleDateString('en-US') %></p> -->
+          <p class="purchased-item">~ <%= item.quantity %> x <%= item.name %></p>
+          <% console.log(item); %>
+          <p class="purchased-item-date">Purchased on: <%= item.purchaseDate.toLocaleDateString('en-US') %></p>
       <% }) %> 
     </ul>
     <h4>Total Spent: $<%= totalSpent %></h4>

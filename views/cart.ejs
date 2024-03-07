@@ -9,7 +9,38 @@
    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap">
 </head>
 <body class="cart-body">
-   <%- include('partials/navbar.ejs') %> <br>
+   <%- include('partials/navbar.ejs') %> 
+   <% if (messages.cartUpdate) { %>
+     <div class="flash-message cartUpdate">
+       <%= messages.cartUpdate %>
+     </div>
+   <% } %>
+   <% if (messages.cartRemove) { %>
+     <div class="flash-message cartRemove">
+       <%= messages.cartRemove %>
+     </div>
+   <% } %>
+   <% if (messages.cartClear) { %>
+     <div class="flash-message cartClear">
+       <%= messages.cartClear %>
+     </div>
+   <% } %>
+   <% if (messages.noProduct) { %>
+     <div class="flash-message noProduct">
+       <%= messages.noProduct %>
+     </div>
+   <% } %>
+   <% if (messages.notEnoughCart) { %>
+     <div class="flash-message notEnoughCart">
+       <%= messages.notEnoughCart %>
+     </div>
+   <% } %>
+   <% if (messages.notEnoughCredit) { %>
+     <div class="flash-message notEnoughCredit">
+       <%= messages.notEnoughCredit %>
+     </div>
+   <% } %>
+   
    <h1 class="cart-title">Welcome to Your Cart, <%= req.user.name %></h1>
    <% if (cartItems.length > 0) { %>
      <ul>
@@ -23,11 +54,11 @@
           <form class="cart-update-button" method="POST" action="/updateCartItem">
            <input type="hidden" name="productId" value="<%= item.productId._id %>">
            <input class="quantity-input" type="number" name="quantity" value="<%= item.quantity %>" min="1" max="<%= item.productId.quantity %>">
-           <button type="submit">Update</button>
+           <button class="update-button" type="submit">Update</button>
           </form>
           <form method="POST" action="/removeFromCart">
            <input type="hidden" name="productId" value="<%= item.productId._id %>">
-           <button type="submit">Remove from Cart</button>
+           <button class="remove-button" type="submit">Remove from Cart</button>
           </form>
             
        </div>
@@ -36,13 +67,13 @@
       <% }); %>
      </ul>
       <div class="final-cart-options">
-         <p>Total Quantity: <%= customer.cart.totalQuantity %></p>
+        <p>Total Quantity: <%= customer.cart.totalQuantity %></p>
         <p>Total Price: $<%= customer.cart.totalPrice %>
-        <form class="clear-cart-button" method="POST" action="/clearCart">
-          <button type="submit">Clear Cart</button>
+        <form class="clear-cart" method="POST" action="/clearCart">
+           <button class="clear-cart-button" type="submit">Clear Cart</button>
         </form>
         <form method="POST" action="/purchase">
-           <button type="submit">Purchase</button>
+           <button class="purchase-button" type="submit">Purchase</button>
         </form>
       </div>
      

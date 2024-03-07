@@ -3,6 +3,9 @@
       <i class="home fas fa-home"></i>
    </a>
    
+
+   <h1 class="shop-title">Allure Nails</h1>
+
    
    <div class="dropdown">
       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -13,8 +16,9 @@
         <a class="dropdown-item" href="/logout">Logout</a>
       </div>
     </div>
+    
    <a href="/cart">
       <i class="cart fas fa-shopping-cart"></i>
    </a>
-   
+   <div class="cart-quant"><%= req.user.cart.totalQuantity %></div>
 </div>
